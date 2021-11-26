@@ -29,7 +29,7 @@ public class RandomiseMove {
                 }
                 case CHEVAL -> {
                     valueGet = new int[2];
-                    int value = (int) (Math.random() * maxValue - 1);
+                    int value = (int) (Math.random() * (maxValue - 1));
                     valueGet[0] = value;
                     valueGet[1] = value + 1;
                 }
