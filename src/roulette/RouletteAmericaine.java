@@ -2,6 +2,7 @@ package roulette;
 
 import board.Case;
 import board.Color;
+import move.RandomiseMove;
 
 public class RouletteAmericaine extends Roulette {
 
@@ -9,6 +10,7 @@ public class RouletteAmericaine extends Roulette {
         MAX_VALUE = 38;
         board = new Case[MAX_VALUE];
         initTabl();
+        RandomiseMove.setMax_value(MAX_VALUE);
     }
 
     @Override

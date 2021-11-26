@@ -10,6 +10,7 @@ public class RouletteEur extends Roulette {
         MAX_VALUE = 37;
         board = new Case[MAX_VALUE];
         initTabl();
+        RandomiseMove.setMax_value(MAX_VALUE);
     }
 
     @Override
