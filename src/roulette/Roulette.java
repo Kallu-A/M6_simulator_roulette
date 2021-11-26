@@ -19,6 +19,8 @@ public abstract class Roulette {
 
     protected int parisGagneJouer = 0;
     protected int parisGagneMaison = 0;
+    private StringBuilder showCoup = new StringBuilder();
+
 
     public abstract void initTabl();
     public abstract String getHistory(Boolean petit);
@@ -69,19 +71,20 @@ public abstract class Roulette {
         }
 
         if (gainHouseBefore < gainHouse) {
-            if (!petit) System.out.println("PERDU " + bet);
+            if (!petit) showCoup.append("PERDU ").append(bet).append("\n");
             parisGagneMaison++;
         }
         else {
-            if (!petit) System.out.println("GAGNÉ " + bet);
+            if (!petit) showCoup.append("GAGNÉ ").append(bet).append("\n");
             parisGagneJouer++;
         }
     }
 
     /** renvoie historique des coups */
     protected String getHistoryP(Boolean petit, String nom) {
-        StringBuilder str = new StringBuilder("\n-----------------------Roulette " + nom + " --------------------- \n");
+        StringBuilder str = new StringBuilder("\n--- Roulette " + nom + " ---\n\n");
         if (!petit) {
+            str.append(showCoup);
             int sum = sumNLaunch();
             double percentRound;
             str.append(" : \n [ ");
@@ -101,7 +104,7 @@ public abstract class Roulette {
         }
 
         double gainHouseRound = Math.round(gainHouse * 1000.0) / 1000.0;
-        str.append("\n\nGain de la maison : ").append(gainHouseRound).append(" sur ").append(sumNLaunch()).append(" lancé de bille\n");
+        str.append("\nGain de la maison : ").append(gainHouseRound).append(" sur ").append(sumNLaunch()).append(" lancé de bille\n");
         str.append("\nParis gagné par les joueurs : ").append(parisGagneJouer).append(" / ").append(parisGagneJouer+parisGagneMaison);
         return str.toString();
     }

@@ -88,7 +88,7 @@ public class Player {
     public String toString() {
         double walletRound = Math.round(wallet * 1000.0) / 1000.0;
         double percentChangeRound = Math.round( percentChange * 1000.0) / 1000.0;
-        return name + " investit : " + valueInvested + " |  finale : " + walletRound + " | modification " + percentChangeRound +
+        return "\n" + name + " investit : " + valueInvested + " |  finale : " + walletRound + " | modification " + percentChangeRound +
                         " % | " + isSafe  + " | mise réussi : " + nombreBetReussi + "/" + nombreBet;
     }
 }

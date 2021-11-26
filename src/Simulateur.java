@@ -9,6 +9,10 @@ import roulette.Roulette;
 import roulette.RouletteAmericaine;
 import roulette.RouletteEur;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +25,20 @@ public class Simulateur {
         Boolean petit = true;
         //permet de définire le même facteur crainte a tous
         Boolean sameCrainte = true;
+        Boolean saveHistory = true;
         // nombre de bille lancé
-        int nbrBille = 100;
+        int nbrBille = 30;
         // [0; 200[
 
         RouletteEur r = new RouletteEur();
-        launchGame(r, nbrBille, petit, sameCrainte);
+        launchGame(r, nbrBille, petit, sameCrainte, saveHistory);
 
         RouletteAmericaine rA = new RouletteAmericaine();
 
-        launchGame(rA, nbrBille, petit, sameCrainte);
+        launchGame(rA, nbrBille, petit, sameCrainte, saveHistory);
     }
 
-    private static void launchGame(Roulette r, int nombreBilleLancer, Boolean petit, Boolean sameCrainte) {
+    private static void launchGame(Roulette r, int nombreBilleLancer, Boolean petit, Boolean sameCrainte, Boolean saveHistory) {
         Player[] p = givePlayers(sameCrainte);
         int mult = p.length;
         List<Bet> list = new ArrayList<>();
@@ -64,7 +69,7 @@ public class Simulateur {
             }
         }
 
-        display(p, r, petit);
+        display(p, r, petit, saveHistory);
     }
 
     /** créer un tableau de 8 joueur et le renvoie */
@@ -92,8 +97,26 @@ public class Simulateur {
     }
 
     /** affiche les résultat de fin de partie */
-    private static void display(Player[] p, Roulette r , Boolean petit) {
-        System.out.println(r.getHistory(petit));
-        for (Player p1: p) System.out.println(p1);
+    private static void display(Player[] p, Roulette r , Boolean petit, Boolean saveHistory) {
+        String val = r.getHistory(petit);
+        StringBuilder str = new StringBuilder(val);
+        for (Player p1: p) str.append(p1);
+        str.append("\n\n-----------------------------------------------------------------------\n");
+
+        System.out.println(str);
+
+        if (saveHistory) {
+            try {
+                PrintWriter wrt = new  PrintWriter(new BufferedWriter(new FileWriter("history.txt", true)));
+                wrt.write(str.toString());
+                wrt.close();
+                System.out.println("Sauvegarde dans history.txt réussi ! ");
+            } catch (IOException e) {
+                System.out.println("Erreur : impossible de mettre les résultat dans le fichier de sauvegarde");
+            }
+        }
+
+
+
     }
 }
